@@ -1,0 +1,37 @@
+@inject ISnackbar Snackbar
+
+<MudCard>
+    <MudCardMedia Image="@ImageUrl" Height="200" />
+    <MudCardContent>
+        <MudRating SelectedValue="@Rating" />
+        <MudText Typo="Typo.body1"
+            style="overflow: hidden;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 1;"
+            GutterBottom>@Title
+        </MudText>
+    </MudCardContent>
+    <MudSpacer />
+    <MudCardActions>
+        <MudText Typo="Typo.button" Color="@Color.Info">@Price</MudText>
+        <MudSpacer />
+        <MudIconButton @onclick="@(() => Snackbar.Add("Assume it's added to your cart :>", Severity.Success))"
+            Icon="@Icons.Outlined.AddShoppingCart" Color="@Color.Secondary" />
+    </MudCardActions>
+</MudCard>
+
+@code {
+    [Parameter, EditorRequired]
+    public string? Title { get; set; }
+    [Parameter, EditorRequired]
+    public int Rating { get; set; }
+    [Parameter, EditorRequired]
+    public string? Price { get; set; }
+    [Parameter, EditorRequired]
+    public string? ImageUrl { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
+        Snackbar.Configuration.ShowTransitionDuration = 200;
+        Snackbar.Configuration.HideTransitionDuration = 200;
+    }
+}
