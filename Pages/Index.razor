@@ -6,7 +6,7 @@
 
 <Carousel />
 
-<MudText class="my-10" Typo="Typo.h4" Align="Align.Center" GutterBottom>@title</MudText>
+<MudText class="my-10" Typo="Typo.h4" Align="Align.Center" GutterBottom>Just a Demo</MudText>
 
 <MudGrid>
     @foreach (var product in products)
@@ -20,17 +20,15 @@
 
 @code {
     private Product[] products = { };
-    private string title = "";
 
     protected override async Task OnInitializedAsync()
     {
-        title = (await Http.GetFromJsonAsync<LoremRicksum>("http://loremricksum.com/api/?paragraphs=1&quotes=1"))!.Data![0];
-        var titles = await Http.GetFromJsonAsync<LoremRicksum>("http://loremricksum.com/api/?paragraphs=20&quotes=1");
+        var titles = await Http.GetFromJsonAsync<string[]>("/sample-data/loremricksum.json");
         products = Enumerable.Range(0, 20).Select(index =>
         {
             return new Product()
                 {
-                    Title = titles!.Data![index],
+                    Title = titles![index],
                     Rating = Random.Shared.Next(5),
                     Price = Random.Shared.Next(20000, 2000000).ToString("C"),
                     ImageUrl = $"https://picsum.photos/800/600?diff={index}"
